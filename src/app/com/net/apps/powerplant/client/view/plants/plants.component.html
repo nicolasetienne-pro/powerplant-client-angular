@@ -1,0 +1,38 @@
+<h2>Liste des Centrales</h2>
+<ul class="plants">
+  <li *ngFor="let plant of plants">
+    <a routerLink="/detail/{{plant.id}}">
+      <span class="badge">{{plant.id}}</span> {{plant.name}} ({{plant.type.name}})
+    </a>
+    <button class="delete" title="delete plant" (click)="delete(plant)">x</button>
+  </li>
+</ul>
+<!--<app-plant-details [plant]="selectedPlant"></app-plant-details>-->
+<hr>
+<h4>Ajout Centrale</h4>
+<div>
+  <label>Nom Centrale
+    <input #plantName/>
+  </label>
+</div>
+<div>
+  <label>Type
+    <select [(ngModel)]="plantType">
+      <option value="" disabled>Choose a type</option>
+      <option *ngFor="let plantType of plantsTypes$ | async" [ngValue]="plantType">
+        {{ plantType.name }}
+      </option>
+    </select>
+  </label>
+</div>
+<div>
+  <label>Capacité (kWh)
+    <input #capacite type="number"/>
+  </label>
+</div>
+<div>
+  <!-- (click) passes input value to add() and then clears the input -->
+  <button (click)="add(plantName.value, plantType, capacite.value); plantName.value=''; plantType=null;capacite.value=''" [disabled]="plantType == null">
+    add
+  </button>
+</div>

@@ -1,0 +1,36 @@
+<h4>Mes Identifiants</h4>
+<pre>
+  Nom :
+  Prénom :
+  login :
+  Modifier password
+</pre>
+<h4>Mon Relevé</h4>
+<div class="col-1-4">
+  <label>Date:
+    <input type="datetime-local" value="2018-01-01T12:00:00.000" #dateReleve>
+  </label>
+
+  <label>Relevé:
+    <input type="number" #valueReleve>
+  </label>
+
+  <label>Centrale:
+    <!--<select [(ngModel)]="plant.type">-->
+    <select>
+      <option value="" disabled selected="true">Choose a type</option>
+      <option *ngFor="let plant of plants$ | async" [ngValue]="plant">
+        {{ plant.name }} ({{ plant.type.name }})
+      </option>
+    </select>
+  </label>
+  <button (click)="save()">Enregistrer Relevé</button>
+</div>
+<!--<div class="grid grid-pad">-->
+<!--<a *ngFor="let plant of plants" class="col-1-4"-->
+<!--routerLink="/detail/{{plant.id}}">-->
+<!--<div class="module plant">-->
+<!--<h4>{{plant.name}}</h4>-->
+<!--</div>-->
+<!--</a>-->
+<!--</div>-->

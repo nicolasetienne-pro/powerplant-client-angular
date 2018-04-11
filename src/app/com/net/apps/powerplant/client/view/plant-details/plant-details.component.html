@@ -1,0 +1,30 @@
+<div *ngIf="plant">
+  <h2>Détails Centrale "{{ plant.name | uppercase }}"</h2>
+  <!--<div><span>id: </span>{{plant.id}}</div>-->
+  <!--<div><span>type: </span>{{plant.type.name}}</div>-->
+  <div>
+    <label>Nom:
+      <input [(ngModel)]="plant.name" placeholder="Nom de centrale">
+    </label>
+  </div>
+
+  <div>
+    <label>Type
+      <!--<input [(ngModel)]="plant.type.name" placeholder="Type de centrale">-->
+      <select [(ngModel)]="plant.type">
+        <option *ngFor="let plantType of plantsTypes$ | async" [ngValue]="plantType">
+          {{ plantType.name }}
+        </option>
+      </select>
+    </label>
+  </div>
+
+  <div>
+    <label>Capacité  (kWh)
+      <input [(ngModel)]="plant.capacity" placeholder="Capacité centrale (kWh)">
+      <!--<input placeholder="Capacité de la centrale">-->
+    </label>
+  </div>
+  <button (click)="goBack()">Back</button>
+  <button (click)="save()">Save</button>
+</div>
