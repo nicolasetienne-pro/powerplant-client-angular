@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Plant} from '../core/plant';
 import {ActivatedRoute} from '@angular/router';
 import { Location } from '@angular/common';
-import {PlantService} from '../rest/api/plant.service';
+import {PlantService} from '../service/plant.service';
 import {PlantType} from '../core/plantType';
 import {Observable} from 'rxjs/Observable';
 import {of} from 'rxjs/observable/of';

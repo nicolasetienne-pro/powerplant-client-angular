@@ -1,0 +1,15 @@
+<h4>Historique des Consommations</h4><hr>
+<div>
+  <table>
+    <tr>
+      <th>Id</th>
+      <th>Date opération</th>
+      <th>Index compteur (kWh)</th>
+    </tr>
+    <tr *ngFor="let releve of releves">
+      <td>{{releve.id}}</td>
+      <td>{{releve.timestamp | date: 'dd/MM/yyyy'}}</td>
+      <td>{{releve.indexCompteur}}</td>
+    </tr>
+  </table>
+</div>

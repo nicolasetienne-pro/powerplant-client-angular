@@ -1,6 +1,6 @@
 import { TestBed, inject } from '@angular/core/testing';
+import {PlantService} from '../../../../../../../app/com/net/apps/powerplant/client/service/plant.service';
 
-import { PlantService } from './plant.service';
 
 describe('PlantService', () => {
   beforeEach(() => {

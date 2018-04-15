@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Plant} from '../core/plant';
-import {PlantService} from '../rest/api/plant.service';
+import {PlantService} from '../service/plant.service';
 import {PlantType} from '../core/plantType';
 import {Observable} from 'rxjs/Observable';
 import {of} from 'rxjs/observable/of';

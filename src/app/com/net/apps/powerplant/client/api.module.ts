@@ -3,9 +3,10 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { Configuration } from './configuration';
 
-import { PlantService } from './rest/api/plant.service';
-import { StatutService } from './rest/api/statut.service';
-import { UserService } from './rest/api/user.service';
+import { PlantService } from './service/plant.service';
+import { ReleveService } from './service/releve.service';
+import { StatutService } from './service/statut.service';
+import { UserService } from './service/user.service';
 
 @NgModule({
   imports:      [ CommonModule, HttpClientModule ],
@@ -13,6 +14,7 @@ import { UserService } from './rest/api/user.service';
   exports:      [],
   providers: [
     PlantService,
+    ReleveService,
     StatutService,
     UserService ]
 })

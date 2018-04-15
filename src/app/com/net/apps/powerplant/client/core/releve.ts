@@ -11,7 +11,7 @@
  */
 
 
-export interface Conso {
+export interface Releve {
     /**
      * id
      */
@@ -25,11 +25,11 @@ export interface Conso {
      */
     userId?: number;
     /**
-     * quantity
+     * indexCompteur
      */
-    quantity?: number;
+    indexCompteur?: number;
     /**
-     * consoDate
+     * timestamp
      */
-    consoDate?: Date;
+    timestamp?: Date;
 }

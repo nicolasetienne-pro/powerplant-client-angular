@@ -1,4 +1,4 @@
-export * from './rest/api/api';
+export * from './service/api';
 export * from './core/models';
 export * from './variables';
 export * from './configuration';
