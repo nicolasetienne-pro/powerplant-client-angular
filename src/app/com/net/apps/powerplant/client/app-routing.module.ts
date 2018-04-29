@@ -4,13 +4,20 @@ import {PlantsComponent} from './component/plants.component';
 import {DashboardComponent} from './component/dashboard.component';
 import {PlantDetailsComponent} from './component/plant-details.component';
 import {UsersComponent} from './component/users.component';
+import {LoginComponent} from './component/login.component';
+import {AuthGuard} from './component/auth.guard.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
-  { path: 'dashboard', component: DashboardComponent },
-  { path: 'detail/:id', component: PlantDetailsComponent },
-  { path: 'plants', component: PlantsComponent },
-  { path: 'users', component: UsersComponent }
+  { path: 'login', component: LoginComponent },
+  { path: 'signup', component: UsersComponent },
+  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
+  { path: 'detail/:id', component: PlantDetailsComponent, canActivate: [AuthGuard] },
+  { path: 'plants', component: PlantsComponent, canActivate: [AuthGuard] },
+
+  // { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
+
+  // otherwise redirect to home
+  { path: '**', redirectTo: 'dashboard' }
 ];
 
 @NgModule({

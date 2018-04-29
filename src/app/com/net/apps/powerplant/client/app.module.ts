@@ -14,26 +14,37 @@ import { AppRoutingModule } from './app-routing.module';
 import {RelevesComponent} from './component/releves.component';
 import {LogService} from './service/log.service';
 import {LogComponent} from './component/log.component';
+import {LoginComponent} from './component/login.component';
+import {Configuration} from './configuration';
+import {AuthGuard} from './component/auth.guard.component';
+import {UserDetailsComponent} from './component/user-details.component';
 
+const configurationFactory = () => new Configuration({
+  apiKeys: {},
+  basePath: "http://localhost:8080/api"
+});
 
 @NgModule({
   declarations: [
     AppComponent,
     UsersComponent,
+    UserDetailsComponent,
     PlantsComponent,
     PlantDetailsComponent,
     DashboardComponent,
     RelevesComponent,
+    LoginComponent,
     LogComponent
   ],
   imports: [
-    ApiModule,
+    ApiModule.forRoot(configurationFactory),
     BrowserModule,
     FormsModule,
     AppRoutingModule,
     HttpClientModule
   ],
   providers: [
+    AuthGuard,
     LogService
   ],
   bootstrap: [AppComponent]

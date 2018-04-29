@@ -1,0 +1,10 @@
+<h4>Mes Identifiants</h4>
+<div *ngIf="(currentUser$ | async) as user; else loading">
+  <h2>{{user.firstName}} {{user.lastName}}</h2>
+  <dl>
+    <dt>Login:</dt>
+    <dd>{{user.username}}</dd>
+
+  </dl>
+</div>
+<ng-template #loading>Chargement compte utilisateur...</ng-template>

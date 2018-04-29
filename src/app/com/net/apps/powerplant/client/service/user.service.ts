@@ -58,14 +58,14 @@ export class UserService {
 
     /**
      * Create user
-     * This can only be done by the logged in user.
+     * 
      * @param body Created user object
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public createUser1(body: User, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public createUser1(body: User, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public createUser1(body: User, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public createUser1(body: User, observe?: 'body', reportProgress?: boolean): Observable<User>;
+    public createUser1(body: User, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<User>>;
+    public createUser1(body: User, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<User>>;
     public createUser1(body: User, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling createUser1.');
@@ -74,8 +74,8 @@ export class UserService {
         let headers = this.defaultHeaders;
 
         // authentication (api_key) required
-        if (this.configuration.apiKeys["api_key"]) {
-            headers = headers.set('api_key', this.configuration.apiKeys["api_key"]);
+        if (this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
         }
 
         // authentication (plant_auth) required
@@ -88,7 +88,6 @@ export class UserService {
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            'application/xml',
             'application/json'
         ];
         let httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
@@ -98,13 +97,14 @@ export class UserService {
 
         // to determine the Content-Type header
         let consumes: string[] = [
+            'application/json'
         ];
         let httpContentTypeSelected:string | undefined = this.configuration.selectHeaderContentType(consumes);
         if (httpContentTypeSelected != undefined) {
             headers = headers.set("Content-Type", httpContentTypeSelected);
         }
 
-        return this.httpClient.post<any>(`${this.basePath}/v1/user`,
+        return this.httpClient.post<User>(`${this.basePath}/v1/user`,
             body,
             {
                 withCredentials: this.configuration.withCredentials,
@@ -133,8 +133,8 @@ export class UserService {
         let headers = this.defaultHeaders;
 
         // authentication (api_key) required
-        if (this.configuration.apiKeys["api_key"]) {
-            headers = headers.set('api_key', this.configuration.apiKeys["api_key"]);
+        if (this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
         }
 
         // authentication (plant_auth) required
@@ -186,8 +186,8 @@ export class UserService {
         let headers = this.defaultHeaders;
 
         // authentication (api_key) required
-        if (this.configuration.apiKeys["api_key"]) {
-            headers = headers.set('api_key', this.configuration.apiKeys["api_key"]);
+        if (this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
         }
 
         // authentication (plant_auth) required
@@ -212,6 +212,55 @@ export class UserService {
         ];
 
         return this.httpClient.get<User>(`${this.basePath}/v1/user/${encodeURIComponent(String(username))}`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * Find all users
+     * 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getUsers1(observe?: 'body', reportProgress?: boolean): Observable<Array<User>>;
+    public getUsers1(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<User>>>;
+    public getUsers1(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<User>>>;
+    public getUsers1(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        let headers = this.defaultHeaders;
+
+        // authentication (api_key) required
+        if (this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
+
+        // authentication (plant_auth) required
+        if (this.configuration.accessToken) {
+            let accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        let httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set("Accept", httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        let consumes: string[] = [
+        ];
+
+        return this.httpClient.get<Array<User>>(`${this.basePath}/v1/user/all`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -251,8 +300,8 @@ export class UserService {
         let headers = this.defaultHeaders;
 
         // authentication (api_key) required
-        if (this.configuration.apiKeys["api_key"]) {
-            headers = headers.set('api_key', this.configuration.apiKeys["api_key"]);
+        if (this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
         }
 
         // authentication (plant_auth) required
@@ -301,8 +350,8 @@ export class UserService {
         let headers = this.defaultHeaders;
 
         // authentication (api_key) required
-        if (this.configuration.apiKeys["api_key"]) {
-            headers = headers.set('api_key', this.configuration.apiKeys["api_key"]);
+        if (this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
         }
 
         // authentication (plant_auth) required
@@ -344,9 +393,9 @@ export class UserService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public updateUser1(username: string, body: User, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public updateUser1(username: string, body: User, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public updateUser1(username: string, body: User, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public updateUser1(username: string, body: User, observe?: 'body', reportProgress?: boolean): Observable<User>;
+    public updateUser1(username: string, body: User, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<User>>;
+    public updateUser1(username: string, body: User, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<User>>;
     public updateUser1(username: string, body: User, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
         if (username === null || username === undefined) {
             throw new Error('Required parameter username was null or undefined when calling updateUser1.');
@@ -358,8 +407,8 @@ export class UserService {
         let headers = this.defaultHeaders;
 
         // authentication (api_key) required
-        if (this.configuration.apiKeys["api_key"]) {
-            headers = headers.set('api_key', this.configuration.apiKeys["api_key"]);
+        if (this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
         }
 
         // authentication (plant_auth) required
@@ -387,7 +436,7 @@ export class UserService {
             headers = headers.set("Content-Type", httpContentTypeSelected);
         }
 
-        return this.httpClient.put<any>(`${this.basePath}/v1/user/${encodeURIComponent(String(username))}`,
+        return this.httpClient.put<User>(`${this.basePath}/v1/user/${encodeURIComponent(String(username))}`,
             body,
             {
                 withCredentials: this.configuration.withCredentials,

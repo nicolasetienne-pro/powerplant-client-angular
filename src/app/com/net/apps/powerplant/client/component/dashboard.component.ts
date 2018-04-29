@@ -6,6 +6,7 @@ import {catchError, tap} from 'rxjs/operators';
 import {of} from 'rxjs/observable/of';
 import {ReleveService} from '../service/releve.service';
 import {Releve} from '../core/releve';
+import {LogService} from '../service/log.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -17,12 +18,12 @@ export class DashboardComponent implements OnInit {
   plants$: Observable<Plant[]>;
   selectedPlant: Plant;
 
-  constructor(private plantService: PlantService, private releveService: ReleveService) { }
+  constructor(private plantService: PlantService, private releveService: ReleveService, private logService: LogService) { }
 
   ngOnInit() {
     this.plants$ = this.plantService.getPlants1()
       .pipe(
-        tap(_ => this.log(`fetched plants for current user`)),
+        tap(_ => this.logService.log(`fetched plants for current user`)),
         catchError(this.handleError<Plant[]>('getPlants', []))
       );
   }
@@ -35,16 +36,10 @@ export class DashboardComponent implements OnInit {
   save(releve: number, date: Date): void {
     this.releveService.addReleve1({timestamp: date, indexCompteur: releve, plantId: this.selectedPlant.id, userId: -1} as Releve)
       .pipe(
-        tap((_releve: Releve) => this.log(`added releve w/ id=${_releve.id}`)),
+        tap((_releve: Releve) => this.logService.log(`added releve w/ id=${_releve.id}`)),
         catchError(this.handleError<Plant>('addReleve'))
       )
       .subscribe(() => this.selectedPlant = null);
-  }
-
-  /** Log a message */
-  private log(message: string) {
-    // this.messageService.add('LogService: ' + message);
-    console.log('LogService: ' + message);
   }
 
   /**
@@ -56,11 +51,7 @@ export class DashboardComponent implements OnInit {
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
 
-      // TODO: send the error to remote logging infrastructure
-      console.error(error); // log to console instead
-
-      // TODO: better job of transforming error for user consumption
-      this.log(`${operation} failed: ${error.message}`);
+      this.logService.log(`${operation} failed: ${error.message}`);
 
       // Let the app keep running by returning an empty result.
       return of(result as T);

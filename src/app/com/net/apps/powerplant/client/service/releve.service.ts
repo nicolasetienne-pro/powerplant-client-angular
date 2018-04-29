@@ -73,6 +73,11 @@ export class ReleveService {
 
         let headers = this.defaultHeaders;
 
+        // authentication (api_key) required
+        if (this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
+
         // authentication (plant_auth) required
         if (this.configuration.accessToken) {
             let accessToken = typeof this.configuration.accessToken === 'function'
@@ -130,6 +135,11 @@ export class ReleveService {
         }
 
         let headers = this.defaultHeaders;
+
+        // authentication (api_key) required
+        if (this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
 
         // authentication (plant_auth) required
         if (this.configuration.accessToken) {

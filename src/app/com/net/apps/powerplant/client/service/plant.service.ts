@@ -64,15 +64,20 @@ export class PlantService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public addPlant1(body: Plant, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public addPlant1(body: Plant, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public addPlant1(body: Plant, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public addPlant1(body: Plant, observe?: 'body', reportProgress?: boolean): Observable<Plant>;
+    public addPlant1(body: Plant, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Plant>>;
+    public addPlant1(body: Plant, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Plant>>;
     public addPlant1(body: Plant, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling addPlant1.');
         }
 
         let headers = this.defaultHeaders;
+
+        // authentication (api_key) required
+        if (this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
 
         // authentication (plant_auth) required
         if (this.configuration.accessToken) {
@@ -100,7 +105,7 @@ export class PlantService {
             headers = headers.set("Content-Type", httpContentTypeSelected);
         }
 
-        return this.httpClient.post<any>(`${this.basePath}/v1/plant`,
+        return this.httpClient.post<Plant>(`${this.basePath}/v1/plant`,
             body,
             {
                 withCredentials: this.configuration.withCredentials,
@@ -115,21 +120,22 @@ export class PlantService {
      * Deletes a plant
      * 
      * @param plantId Plant id to delete
-     * @param apiKey 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public deletePlant1(plantId: number, apiKey?: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public deletePlant1(plantId: number, apiKey?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public deletePlant1(plantId: number, apiKey?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public deletePlant1(plantId: number, apiKey?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public deletePlant1(plantId: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public deletePlant1(plantId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public deletePlant1(plantId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public deletePlant1(plantId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
         if (plantId === null || plantId === undefined) {
             throw new Error('Required parameter plantId was null or undefined when calling deletePlant1.');
         }
 
         let headers = this.defaultHeaders;
-        if (apiKey !== undefined && apiKey !== null) {
-            headers = headers.set('api_key', String(apiKey));
+
+        // authentication (api_key) required
+        if (this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
         }
 
         // authentication (plant_auth) required
@@ -180,6 +186,11 @@ export class PlantService {
 
         let headers = this.defaultHeaders;
 
+        // authentication (api_key) required
+        if (this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
+
         // authentication (plant_auth) required
         if (this.configuration.accessToken) {
             let accessToken = typeof this.configuration.accessToken === 'function'
@@ -223,6 +234,11 @@ export class PlantService {
     public getPlants1(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         let headers = this.defaultHeaders;
+
+        // authentication (api_key) required
+        if (this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
 
         // authentication (plant_auth) required
         if (this.configuration.accessToken) {
@@ -268,6 +284,11 @@ export class PlantService {
 
         let headers = this.defaultHeaders;
 
+        // authentication (api_key) required
+        if (this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
+
         // authentication (plant_auth) required
         if (this.configuration.accessToken) {
             let accessToken = typeof this.configuration.accessToken === 'function'
@@ -306,15 +327,20 @@ export class PlantService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public updatePlant1(body: Plant, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public updatePlant1(body: Plant, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public updatePlant1(body: Plant, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public updatePlant1(body: Plant, observe?: 'body', reportProgress?: boolean): Observable<Plant>;
+    public updatePlant1(body: Plant, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Plant>>;
+    public updatePlant1(body: Plant, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Plant>>;
     public updatePlant1(body: Plant, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling updatePlant1.');
         }
 
         let headers = this.defaultHeaders;
+
+        // authentication (api_key) required
+        if (this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
 
         // authentication (plant_auth) required
         if (this.configuration.accessToken) {
@@ -342,7 +368,7 @@ export class PlantService {
             headers = headers.set("Content-Type", httpContentTypeSelected);
         }
 
-        return this.httpClient.put<any>(`${this.basePath}/v1/plant`,
+        return this.httpClient.put<Plant>(`${this.basePath}/v1/plant`,
             body,
             {
                 withCredentials: this.configuration.withCredentials,
@@ -371,6 +397,11 @@ export class PlantService {
         }
 
         let headers = this.defaultHeaders;
+
+        // authentication (api_key) required
+        if (this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
 
         // authentication (plant_auth) required
         if (this.configuration.accessToken) {
