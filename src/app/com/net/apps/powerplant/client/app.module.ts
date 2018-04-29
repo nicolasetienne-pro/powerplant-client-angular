@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ApiModule } from './api.module'
 
@@ -18,6 +18,7 @@ import {LoginComponent} from './component/login.component';
 import {Configuration} from './configuration';
 import {AuthGuard} from './component/auth.guard.component';
 import {UserDetailsComponent} from './component/user-details.component';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 const configurationFactory = () => new Configuration({
   apiKeys: {},
@@ -37,6 +38,10 @@ const configurationFactory = () => new Configuration({
     LogComponent
   ],
   imports: [
+    NgbModule.forRoot(),
+
+    BrowserModule, FormsModule, ReactiveFormsModule,
+
     ApiModule.forRoot(configurationFactory),
     BrowserModule,
     FormsModule,
