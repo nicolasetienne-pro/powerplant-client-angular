@@ -20,8 +20,8 @@
   </div>
 
   <div>
-    <label>Capacité  (kWh)
-      <input [(ngModel)]="plant.capacity" placeholder="Capacité centrale (kWh)">
+    <label>Capacité Stockage (kW)
+      <input [(ngModel)]="plant.capacity" placeholder="Capacité centrale (kW)">
       <!--<input placeholder="Capacité de la centrale">-->
     </label>
   </div>
@@ -30,5 +30,3 @@
   <hr>
   <app-releves [plant]="plant"></app-releves>
 </div>
-
-<app-logger></app-logger>

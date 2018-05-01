@@ -1,0 +1,28 @@
+<h4>Historique des Consommations</h4>
+<hr>
+<div class="row">
+  <div class="col">
+    <div ngbDropdown class="d-inline-block">
+      <button class="btn btn-outline-primary" id="filterPlant" ngbDropdownToggle>Filtre Centrale</button>
+      <div ngbDropdownMenu aria-labelledby="filterPlant">
+        <button class="dropdown-item" *ngFor="let plant of plants" (click)="filterBy(plant)">{{plant.name}} ({{plant.type.name}})</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col">
+    <div style="display: block;">
+      <!--width="400" height="400"-->
+      <canvas baseChart height="150" width="500"
+              [datasets]="lineChartData"
+              [labels]="lineChartLabels"
+              [options]="lineChartOptions"
+              [colors]="lineChartColors"
+              [legend]="lineChartLegend"
+              [chartType]="lineChartType"
+              (chartClick)="chartClicked($event)"></canvas>
+    </div>
+  </div>
+</div>
+

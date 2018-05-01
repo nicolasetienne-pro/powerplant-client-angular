@@ -1,7 +1,11 @@
 /*.container {*/
-  /*position: relative;*/
-  /*height: 15rem;*/
-  /*!*border: 1px solid;*!*/
+  /*position: absolute;*/
+/*top: 20%;*/
+/*left:20%;*/
+/*transform: translate(-20%,-20%);*/
+  /*!*position: relative;*!*/
+  /*!*height: 15rem;*!*/
+  /*!*!*border: 1px solid;*!*!*/
 /*}*/
 
 /*.jumbotron {*/

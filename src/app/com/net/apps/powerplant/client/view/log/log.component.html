@@ -1,26 +1,17 @@
-
-
-<!--<p>-->
-<!--<span style="float: right;align-content: flex-end">-->
-<!--<button type="button" class="btn btn-primary" (click)="logService.clear()">Reset</button>-->
-<!--</span>-->
-<!--<strong>Logs</strong>-->
-<!--</p>-->
-<!--<div style="border: thin dashed;margin: 0em; padding: 1em">-->
-<!--<div *ngIf="logService.messages.length">-->
-<!--<p *ngFor='let message of logService.messages'>{{message}}</p>-->
-<!--</div>-->
-<!--</div>-->
-
-
 <div *ngIf="logService.messages.length">
 
   <p>
-  <!--<span style="float: right;align-content: flex-end">-->
-    <button type="button" class="btn btn-primary" (click)="logService.clear()">Reset</button>
-  <!--</span>-->
+    <button type="button" class="btn btn-primary" (click)="showHide()">
+      <span *ngIf="show else hide">Masquer les Logs</span>
+      <ng-template #hide><span>Afficher les Logs</span></ng-template>
+    </button>
+    <button *ngIf="show" type="button" class="btn btn-primary" (click)="logService.clear()">Reset</button>
+    <!--</span>-->
   </p>
-  <p *ngFor="let message of logService.messages">
-    <ngb-alert>{{ message }}</ngb-alert>
-  </p>
+  <div *ngIf="show">
+
+    <p *ngFor="let message of logService.messages">
+      <ngb-alert>{{ message }}</ngb-alert>
+    </p>
+  </div>
 </div>

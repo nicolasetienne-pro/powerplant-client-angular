@@ -13,26 +13,26 @@ import {ISubscription} from 'rxjs/Subscription';
   styleUrls: ['../view/login/login.component.css']
 })
 export class LoginComponent implements OnInit, OnDestroy {
-  model: any = {};
-  loading = false;
-  error = '';
   private subscription: ISubscription;
+
+  public model: any = {};
+  public loading = false;
 
   constructor(private router: Router,
               private userService: UserService,
               private logService: LogService) {
   }
 
-  ngOnInit() {
+  public ngOnInit() {
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
     if(this.subscription) {
       this.subscription.unsubscribe();
     }
   }
 
-  login(): void {
+  public login(): void {
     this.loading = true;
     this.subscription = this.userService.loginUser1(this.model.username, this.model.password, 'response')
       .pipe(
@@ -60,7 +60,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       );
   }
 
-  logout(): void {
+  public logout(): void {
     if(this.userService.configuration.accessToken) {
       this.subscription = this.userService.logoutUser1()
         .pipe(
@@ -75,4 +75,5 @@ export class LoginComponent implements OnInit, OnDestroy {
         );
     }
   }
+
 }

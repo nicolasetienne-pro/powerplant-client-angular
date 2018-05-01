@@ -7,11 +7,12 @@ import {catchError, tap} from 'rxjs/operators';
 @Injectable()
 export class LogService {
 
-  messages: string[] = [];
+  messages: any[] = [];
 
-  log(message: string) {
+  log(message: string | any) {
     this.messages.push("> " + message);
     console.log('LogService: ' + message);
+    // <pre>Model: {{ model | json }}</pre>
   }
 
   clear() {

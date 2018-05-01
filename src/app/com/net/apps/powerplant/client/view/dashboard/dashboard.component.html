@@ -1,23 +1,74 @@
-<app-user-details></app-user-details>
-<hr>
-<h4>Mon Relevé</h4>
-<div class="col-1-3">
-  <label>Date:
-    <input type="datetime-local" value="2018-01-01T12:00:00.000" #dateReleve>
-  </label>
-
-  <label>Relevé:
-    <input type="number" #valueReleve>
-  </label>
-
-  <label>Centrale:
-    <select [(ngModel)]="selectedPlant">
-    <!--<select>-->
-      <option value="" disabled selected="true">Choose a type</option>
-      <option *ngFor="let plant of plants$ | async" [ngValue]="plant">
-        {{ plant.name }} ({{ plant.type.name }})
-      </option>
-    </select>
-  </label>
-  <button (click)="save(valueReleve.value, dateReleve.value)">Enregistrer Relevé</button>
+<div *ngIf="currentUser">
+  <app-user-details [user]="currentUser"></app-user-details>
 </div>
+<hr>
+  <div *ngIf="plants">
+    <app-releves-history [plants]="plants" [user]="currentUser"></app-releves-history>
+  </div>
+<hr>
+
+<ng-template #content let-saveBt="close" let-dismissCross="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">Mon Relevé</h4>
+    <button type="button" class="close" aria-label="Close" (click)="dismissCross('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <div class="form-row">
+      <label for="dateReleve">Date:</label>
+      <!--<input class="form-control" type="datetime-local"-->
+      <!--id="dateReleve"-->
+      <!--value="2018-01-01T12:00:00.000" #dateReleve>-->
+
+      <div class="input-group">
+        <input class="form-control" placeholder="yyyy-mm-dd"
+               [(ngModel)]="dateReleve" #d="ngbDatepicker"
+               id="dateReleve" ngbDatepicker (click)="d.toggle()">
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button">
+            <img src="/assets/img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <label for="valueReleve">Relevé:</label>
+      <div class="input-group mb-2">
+        <input class="form-control" type="number"
+               [(ngModel)]="valueReleve"
+               id="valueReleve" aria-describedby="valueReleve-unit">
+        <div class="input-group-append">
+          <span class="input-group-text" id="valueReleve-unit">kWh</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <label for="plant">Centrale:</label>
+      <div class="input-group mb-2">
+        <div class="input-group-prepend">
+          <label class="input-group-text" for="plant">Type</label>
+        </div>
+        <select [(ngModel)]="selectedPlant" id="plant">
+          <option value="" disabled>Choose a type</option>
+          <option *ngFor="let plant of plants" [ngValue]="plant">
+            {{ plant.name }} ({{ plant.type.name }})
+          </option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!--<pre>Model: {{ dateReleve | json }}</pre>-->
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="saveBt()">Enregistrer Relevé</button>
+  </div>
+</ng-template>
+
+<button class="btn btn-lg btn-outline-primary" (click)="open(content)">Mettre à jour index</button>
+<!--<button class="btn btn-lg btn-outline-primary" (click)="openCentrale()">Ajouter Centrale</button>-->
+<a routerLink="/plants"><button class="btn btn-lg btn-outline-primary" >Centrales</button></a>
+

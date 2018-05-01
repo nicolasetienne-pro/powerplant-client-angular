@@ -19,6 +19,8 @@ import {Configuration} from './configuration';
 import {AuthGuard} from './component/auth.guard.component';
 import {UserDetailsComponent} from './component/user-details.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {RelevesHistoryComponent} from './component/releves-history.component';
+import {ChartsModule} from 'ng2-charts';
 
 const configurationFactory = () => new Configuration({
   apiKeys: {},
@@ -34,13 +36,14 @@ const configurationFactory = () => new Configuration({
     PlantDetailsComponent,
     DashboardComponent,
     RelevesComponent,
+    RelevesHistoryComponent,
     LoginComponent,
     LogComponent
   ],
   imports: [
     NgbModule.forRoot(),
 
-    BrowserModule, FormsModule, ReactiveFormsModule,
+    BrowserModule, FormsModule, ReactiveFormsModule,ChartsModule,
 
     ApiModule.forRoot(configurationFactory),
     BrowserModule,

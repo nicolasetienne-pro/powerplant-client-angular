@@ -4,6 +4,9 @@ import {PlantService} from '../service/plant.service';
 import {PlantType} from '../core/plantType';
 import {Observable} from 'rxjs/Observable';
 import {LogService} from '../service/log.service';
+import {Location} from '@angular/common';
+import {PlantDetailsComponent} from './plant-details.component';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-plants',
@@ -12,27 +15,31 @@ import {LogService} from '../service/log.service';
 })
 export class PlantsComponent implements OnInit {
 
+  model;
   plants: Plant[];
   plantsTypes$: Observable<PlantType[]>;
   plantType: PlantType;
 
-  constructor(private plantService: PlantService, private logService: LogService) {
+  constructor(private plantService: PlantService,
+              private location: Location,
+              private modalService: NgbModal,
+              private logService: LogService) {
   }
 
-  ngOnInit() {
+  public ngOnInit() {
     this.getPlants();
     this.plantsTypes$ = this.plantService.getPlantsTypes1()
       // .pipe(this.logService.logError<PlantType[]>('getPlantsTypes', []));
     ;
   }
 
-  getPlants(): void {
+  public getPlants(): void {
     this.plantService.getPlants1()
       // .pipe(this.logService.logError<Plant[]>('getPlants', []))
       .subscribe(plants => this.plants = plants);
   }
 
-  add(name: string, type: PlantType, capacity: number): void {
+  public add(name: string, type: PlantType, capacity: number): void {
     name = name.trim();
     if (!name) {
       return;
@@ -42,10 +49,20 @@ export class PlantsComponent implements OnInit {
       .subscribe(_plant => this.plants.push(_plant));
   }
 
-  delete(plant: Plant): void {
+  public delete(plant: Plant): void {
     this.plants = this.plants.filter(p => p !== plant);
     this.plantService.deletePlant1(plant.id)
       // .pipe(this.logService.logError<Plant>('delete Plant'))
       .subscribe();
+  }
+
+  public goBack(): void {
+    this.location.back();
+  }
+
+  public openDetails(plant: Plant): void {
+    const modalRef = this.modalService.open(PlantDetailsComponent);
+    modalRef.componentInstance.plant = plant;
+
   }
 }

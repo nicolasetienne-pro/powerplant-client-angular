@@ -8,9 +8,14 @@ import {LogService} from '../service/log.service';
 })
 export class LogComponent implements OnInit {
 
+  public show = false;
+
   constructor(public logService: LogService) { }
 
-  ngOnInit() {
+  public ngOnInit() {
   }
 
+  public showHide(): void {
+    this.show = !this.show;
+  }
 }
